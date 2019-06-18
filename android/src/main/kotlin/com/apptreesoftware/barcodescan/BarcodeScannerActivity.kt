@@ -17,6 +17,9 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
 
     lateinit var scannerView: me.dm7.barcodescanner.zxing.ZXingScannerView
 
+    var flashOn:String? = ""
+    var flashOff:String? = ""
+
     companion object {
         val REQUEST_TAKE_PHOTO_CAMERA_PERMISSION = 100
         val TOGGLE_FLASH = 200
@@ -25,6 +28,17 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val bundle: Bundle? = intent.extras
+        
+
+        bundle?.let {
+            bundle.apply{
+                flashOn = getString("flashOn")
+                flashOff = getString("flashOff")
+            }
+        }
+
         title = ""
         scannerView = ZXingScannerView(this)
         scannerView.setAutoFocus(true)
@@ -36,13 +50,14 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         if (scannerView.flash) {
             val item = menu.add(0,
-                    TOGGLE_FLASH, 0, "Flash Off")
+                    TOGGLE_FLASH, 0, flashOff)
             item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
         } else {
             val item = menu.add(0,
-                    TOGGLE_FLASH, 0, "Flash On")
+                    TOGGLE_FLASH, 0, flashOn)
             item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
         }
+
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -126,7 +141,7 @@ object PermissionUtil {
         }
 
         // Verify that each required permission has been granted, otherwise return false.
-        for (result in grantResults) {
+        for (result in grantResults) {  
             if (result != PackageManager.PERMISSION_GRANTED) {
                 return false
             }
