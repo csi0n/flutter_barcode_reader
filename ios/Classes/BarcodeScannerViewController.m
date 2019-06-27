@@ -10,6 +10,14 @@
 @implementation BarcodeScannerViewController {
 }
 
+- (id)initWithOptions:(NSDictionary *)options{
+    if(self = [super initWithNibName:@"BarcodeScannerViewController" bundle:nil]){
+        self.cancelText = [options objectForKey:@"Cancel"];
+        self.flashOffText = [options objectForKey:@"Flash Off"];
+        self.flashOnText = [options objectForKey:@"Flash On"];
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -42,7 +50,9 @@
                              views:@{@"scanRect": _scanRect}]];
   [_scanRect startAnimating];
     self.scanner = [[MTBBarcodeScanner alloc] initWithPreviewView:_previewView];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel)];
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:self.cancelText style:UIBarButtonItemStylePlain target:self action:@selector(cancel)];
+//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initwithti:UIBarButtonSystemItemCancel target:self action:@selector(cancel)];
   [self updateFlashButton];
 }
 
@@ -90,11 +100,11 @@
         return;
     }
     if (self.isFlashOn) {
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Flash Off"
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:self.flashOffText
                                                                                   style:UIBarButtonItemStylePlain
                                                                                  target:self action:@selector(toggle)];
     } else {
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Flash On"
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:self.flashOnText
                                                                                   style:UIBarButtonItemStylePlain
                                                                                  target:self action:@selector(toggle)];
     }

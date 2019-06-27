@@ -15,6 +15,10 @@
 @property(nonatomic, retain) MTBBarcodeScanner *scanner;
 @property(nonatomic, weak) id<BarcodeScannerViewControllerDelegate> delegate;
 
+@property(nonatomic,retain) NSString *flashOnText;
+@property(nonatomic,retain) NSString *flashOffText;
+@property(nonatomic,retain) NSString *cancelText;
+
   
   -(id) initWithOptions:(NSDictionary *) options;
 @end
