@@ -11,7 +11,7 @@
 }
 
 - (id)initWithOptions:(NSDictionary *)options{
-    if(self = [super initWithNibName:@"BarcodeScannerViewController" bundle:nil]){
+    if(self = [super init]){
         self.cancelText = [options objectForKey:@"Cancel"];
         self.flashOffText = [options objectForKey:@"Flash Off"];
         self.flashOnText = [options objectForKey:@"Flash On"];
